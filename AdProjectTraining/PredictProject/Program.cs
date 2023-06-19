@@ -26,3 +26,13 @@ var preprocessingPipeline = context.Transforms.Categorical
     , "RoomsNormalized", "FloorNormalized", "ElevatorConverted",
     "ParkingConverted", "StorageConverted", "LocationNameEncoded"));
 
+//Train Model
+var trainingPipeline = preprocessingPipeline
+    .Append(context.Transforms.CopyColumns("Label", "TotalPrice"))
+    .Append(context.Regression.Trainers.Sdca())
+    .Append(context.Transforms.CopyColumns("Score", "Score"));
+
+var tts = context.Data.TrainTestSplit(data, testFraction: 0.2);
+
+var trainedModel = trainingPipeline.Fit(tts.TrainSet);
+
