@@ -6,7 +6,7 @@ Console.OutputEncoding = Encoding.UTF8;
 
 var mlContext = new MLContext();
 
-// بارگذاری داده‌ها
+// ---------------------- Load Data
 
 var dataPath = "output.csv";
 var textLoader = mlContext.Data.CreateTextLoader<Advertisement>(separatorChar: ',', hasHeader:true);
