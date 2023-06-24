@@ -1,0 +1,91 @@
+﻿@model MLHousePrice.Models.Services.DTOs.AdvertisementDetailsDto
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>@Model.Title</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">محل</h5>
+                            <p class="card-text">@Model.LocationId</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">قیمت</h5>
+                            <p class="card-text">@Model.TotalPrice.ToString("n0")</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">مساحت</h5>
+                            <p class="card-text">@Model.Area مترمربع</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">سال ساخت</h5>
+                            <p class="card-text">@Model.BuildYear</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">اتاق ها</h5>
+                            <p class="card-text">@Model.Rooms اتاق</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">طبقه</h5>
+                            <p class="card-text">@Model.Floor</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="card-title">آسانسور</h5>
+                            @if (Model.Elevator)
+                            {
+                                <p>با آسانسور</p>
+                            }
+                            else
+                            {
+                                <p>بدون آسانسور</p>
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="card-title">پارکینگ</h5>
+                            @if (Model.Parking)
+                            {
+
+                                <p>دارای پارکینگ</p>
+                            }
+                            else
+                            {
+                                <p>بدون پارکینگ</p>
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="card-title">انباری</h5>
+                            @if (Model.Storage)
+                            {
+                                <p>دارای انباری</p>
+                            }
+                            else
+                            {
+                                <p>بدون انباری</p>
+                            }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="card-title">توضیحات</h5>
+                            <p class="card-text">@Model.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@using MLHousePrice.Models.Services.DTOs
+
+ 
+
+@model IEnumerable<AdvertisementListDto>
+
+@foreach (var ad in Model )
+{
+  
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="row no-gutters">
+                <div class="col-md-5">
+                    <img src="~/Images/noimage.jpg" alt="@ad.Title" class="card-img-top">
+                </div>
+                <div class="col-md-7 text-right">
+                    <div class="card-body text-right">
+                        <a href="~/Advertisements/Detail/@ad.Id">
+                            <h5 class="card-title">@ad.Title</h5>
+                        </a>
+                        <div class="card-text">@ad.LocationName</div>
+                        <div class="card-text text-right">@ad.TotalPrice.ToString("n0") تومان</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

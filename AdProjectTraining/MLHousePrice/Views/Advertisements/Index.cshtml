@@ -1,0 +1,55 @@
+﻿@using MLHousePrice.Models.Services.DTOs;
+@using MLHousePrice.Models.ViewModels;
+@model AdvertisementsReportViewModel
+@{
+    ViewData["Title"] = "Advertisements";
+}
+
+<div class="container">
+    <div class="row" id="advertisement-list">
+        @await Html.PartialAsync("_AdvertisementsPartial", Model.PaginatedAdvertisements.Advertisements)
+    </div>
+</div>
+
+ 
+
+@section Scripts {
+    <script>
+        var pageIndex = @(Model.PageIndex);
+        var totalPages = @(Model.TotalPages);
+
+        function loadMoreAdvertisements() {
+            pageIndex++;
+            if (pageIndex <= totalPages) {
+                $.ajax({
+                    url: "@Url.Action("Index", "Advertisements")",
+                    data: { pageIndex: pageIndex },
+                    type: "GET",
+                    success: function (data) {
+                        if (data) {
+                            $("#advertisement-list").append(data);
+                        } else {
+                            alert("دیگر داده‌ای برای نمایش وجود ندارد.");
+                        }
+                    },
+                    error: function () {
+                        alert("خطایی رخ داد. لطفاً دوباره تلاش کنید.");
+                    }
+                });
+            } else {
+                alert("به انتهای لیست رسیدید");
+            }
+        }
+
+        window.onscroll = function () {
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.documentElement.scrollHeight;
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop + windowHeight >= documentHeight) {
+                loadMoreAdvertisements();
+            }
+        }
+    </script>
+
+}

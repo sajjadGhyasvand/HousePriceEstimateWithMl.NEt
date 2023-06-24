@@ -1,0 +1,126 @@
+﻿@using MLHousePrice.Models.ViewModels;
+@model PredictionViewModel
+@{
+    ViewData["Title"] = "پیش‌بینی قیمت روز مسکن";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+ 
+
+<div>
+    <h3>مشخصات ملک</h3>
+    <hr />
+    <form id="prediction-form">
+        <div class="form-group">
+            <label asp-for="Area">مساحت:</label>
+            <select asp-for="Area" class="form-control" asp-items="@Enumerable.Range(35, 276).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() })"></select>
+            <span asp-validation-for="Area" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BuildYear">سال ساخت:</label>
+            <select asp-for="BuildYear" class="form-control" asp-items="@Enumerable.Range(1370, 41).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() })"></select>
+            <span asp-validation-for="BuildYear" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rooms">تعداد اتاق‌ها:</label>
+            <select asp-for="Rooms" class="form-control" asp-items="@Enumerable.Range(1, 4).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() })"></select>
+            <span asp-validation-for="Rooms" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Floor">طبقه:</label>
+            <select asp-for="Floor" class="form-control" asp-items="@Enumerable.Range(1, 30).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() })"></select>
+            <span asp-validation-for="Floor" class="text-danger"></span>
+        </div>
+
+@*        <div class="form-group">
+            <label asp-for="LocationName">محله:</label>
+            <select asp-for="LocationName" class="form-control" asp-items="@(new SelectList(ViewBag.Locations))"></select>
+            <span asp-validation-for="LocationName" class="text-danger"></span>
+        </div>*@
+        <div class="form-group">
+    <label for="location">محله:</label>
+    <select asp-for="LocationName" class="form-control">
+        <option value="جیحون">جیحون</option>
+        <option value="جردن">جردن</option>
+        <option value="آذربایجان">آذربایجان</option>
+        <option value="ولنجک">ولنجک</option>
+        <option value="ونک">ونک</option>
+        <option value="پونک">پونک</option>
+        <option value="سعادت‌آباد">سعادت‌آباد</option>
+        <option value="صادقیه">صادقیه</option>
+        <option value="قیطریه">قیطریه</option>
+        <option value="فاطمی">فاطمی</option>
+        <option value="امیرآباد">امیرآباد</option>
+        <option value="ستارخان">ستارخان</option>
+        <option value="افسریه">افسریه</option>
+        <option value="شهرآرا">شهرآرا</option>
+        <option value="توحید">توحید</option>
+    </select>
+                <span asp-validation-for="LocationName" class="text-danger"></span>
+
+</div>
+        <div class="form-group">
+            <label>
+                <input asp-for="Elevator" type="checkbox" />
+                @Html.DisplayNameFor(model => model.Elevator)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input asp-for="Parking" type="checkbox" />
+                @Html.DisplayNameFor(model => model.Parking)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input asp-for="Storage" type="checkbox" />
+                @Html.DisplayNameFor(model => model.Storage)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <button id="predict-button" class="btn btn-primary">پیش‌بینی قیمت</button>
+        </div>
+    </form>
+</div>
+
+ <div id="prediction-result" style="display: none;">
+    <h3>نتایج پیش‌بینی قیمت</h3>
+    <p>قیمت پیش‌بینی شده: <span id="predicted-price"></span></p>
+    <p>حداقل قیمت: <span id="min-price"></span></p>
+    <p>حداکثر قیمت: <span id="max-price"></span></p>
+</div>
+
+
+
+
+    @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#predict-button').click(function (e) {
+                e.preventDefault();
+                $('#prediction-result').hide();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Advertisements/Prediction',
+                    data: $('#prediction-form').serialize(),
+                    success: function (result) {
+                        $('#prediction-result').show();
+                        $('#prediction-result').html('<p>قیمت پیش‌بینی شده: ' + result.price  +'</p>');
+                    },
+                    error: function (result) {
+                        alert('خطایی رخ داده است.');
+                    }
+                });
+            });
+        });
+    </script>
+}

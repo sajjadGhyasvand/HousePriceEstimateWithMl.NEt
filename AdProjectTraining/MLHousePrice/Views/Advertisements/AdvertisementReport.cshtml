@@ -1,0 +1,44 @@
+﻿@using MLHousePrice.Models.ViewModels
+
+@model AdvertisementReportViewModel
+@{
+ViewData["Title"] = "گزارش آگهی‌ها";
+}
+
+<h2>گزارش آگهی‌ها</h2>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <h4>تعداد کل آگهی‌ها: @Model.TotalAdvertisements.ToString("n0")</h4>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+ 
+            <th scope="col">نام</th>
+            <th scope="col">تعداد آگهی‌ها</th>
+             <th scope="col">بیشترین قیمت (تومان)</th>
+            <th scope="col">کمترین قیمت (تومان)</th>
+            <th scope="col">میانگین قیمت (تومان)</th>
+            <th scope="col"> میانگین متراژ</th>
+            <th scope="col"> میانگین سن بنا </th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var locationReport in Model.LocationReports)
+            {
+                <tr>
+                   
+                    <td>@locationReport.Name</td>
+                    <td>@locationReport.AdvertisementCount</td>
+                    <td>@(locationReport.MaxPrice.HasValue ? locationReport.MaxPrice.Value.ToString("N0") : "نامشخص")</td>
+                    <td>@(locationReport.MinPrice.HasValue ? locationReport.MinPrice.Value.ToString("N0") : "نامشخص")</td>
+                    <td>@(locationReport.AvgPrice.HasValue ? locationReport.AvgPrice.Value.ToString("N0") : "نامشخص")</td>
+                    <td>@(locationReport.AvgPrice.HasValue ? locationReport.AvgArea.Value  : "نامشخص")</td>
+                    <td>@(locationReport.AvgPrice.HasValue ? locationReport.AvgBuildYear.Value  : "نامشخص")</td>
+                </tr>
+            }
+    </tbody>
+</table>
+</div>
