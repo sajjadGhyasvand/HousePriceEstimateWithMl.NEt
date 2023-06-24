@@ -50,14 +50,14 @@ var predEngine = context.Model.CreatePredictionEngine<Advertisment, HousePricePr
 
 var result = predEngine.Predict(new Advertisment
 {
-Area = 157,
-BuildYear = 1385,
-Rooms = 3,
-Floor = 2,
+Area = 158,
+BuildYear = 1401,
+Rooms = 2,
+Floor = 4,
 Elevator = true,
 Parking = true,
 Storage = true,
-LocationName = "سعادت آباد"
+LocationName = "جردن"
 });
 
 Console.WriteLine($"Predicted price:{result.Price.ToString("n0")}");
