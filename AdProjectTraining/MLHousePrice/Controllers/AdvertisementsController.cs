@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.ML;
 using MLHousePrice.Models.Extensions;
+using MLHousePrice.Models.ML;
 using MLHousePrice.Models.Services;
 using MLHousePrice.Models.Services.DTOs;
 using MLHousePrice.Models.ViewModels;
@@ -83,55 +86,56 @@ namespace MLHousePrice.Controllers
         }
 
 
-        /*public async Task<IActionResult> Prediction()
+        public async Task<IActionResult> Prediction()
         {
             ViewBag.Locations = new List<SelectListItem>
-        {
+            {
         new SelectListItem { Value = "منطقه ۱", Text = "منطقه ۱" },
         new SelectListItem { Value = "منطقه ۲", Text = "منطقه ۲" },
         new SelectListItem { Value = "منطقه ۳", Text = "منطقه ۳" },
         new SelectListItem { Value = "منطقه ۴", Text = "منطقه ۴" },
         new SelectListItem { Value = "منطقه ۵", Text = "منطقه ۵" },
-        new SelectListItem { Value = "منطقه ۶", Text = "منطقه ۶" } };
+        new SelectListItem { Value = "منطقه ۶", Text = "منطقه ۶" }
+            };
             return View();
-        }*/
+        }
 
-      /*  [HttpPost]
-        public async Task<IActionResult> Prediction(PredictionViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // انجام محاسبات برای پیشبینی قیمت
+          [HttpPost]
+          public async Task<IActionResult> Prediction(PredictionViewModel model)
+          {
+              if (ModelState.IsValid)
+              {
+                  // Use Project Of Predict
 
-                MLContext mlContext = new MLContext();
-                DataViewSchema modelSchema;
-                ITransformer trainedModel =
-                    mlContext.Model.Load("C:\\Users\\ebbab\\source\\repos\\AdProjectTraining\\Predict Project\\bin\\Debug\\net7.0\\model.zip"
-                    , out modelSchema);
+                  MLContext mlContext = new MLContext();
+                  DataViewSchema modelSchema;
+                  ITransformer trainedModel =
+                      mlContext.Model.Load("C:\\Users\\S.Ghiasvand\\source\\repos\\HousePriceEstimateWithMl.NEt_2\\AdProjectTraining\\MLHousePrice\\model.zip"
+                      , out modelSchema);
 
-                PredictionEngineWrapper predictionEngine =
-                    new PredictionEngineWrapper(trainedModel, mlContext);
+                  PredictionEngineWrapper predictionEngine = new PredictionEngineWrapper(trainedModel, mlContext);
 
-                var prediction = predictionEngine.Predict(new MLInputData
-                {
-                    Area= model.Area,
-                    BuildYear= model.BuildYear,
-                    Elevator= model.Elevator,
-                    Floor= model.Floor,
-                    LocationName= model.LocationName,
-                    Parking= model.Parking,
-                    Rooms= model.Rooms,
-                    Storage= model.Storage,
-                });
+                  var prediction = predictionEngine.Predict(new MLInputData
+                  {
+                      Area= model.Area,
+                      BuildYear= model.BuildYear,
+                      Rooms= model.Rooms,
+                      Floor= model.Floor,
+                      Elevator= model.Elevator,
+                      LocationName= model.LocationName,
+                      Parking= model.Parking,
+                      Storage= model.Storage,
+                      TotalPrice = model.TotalPrice,
+                  });
 
-                // قیمت پیشبینی شده
-                string predictedPrice = prediction.Price.ToString("n0");
+                  // Predicted Price
+                  string predictedPrice = prediction.Price.ToString("n0");
 
-                // برگرداندن نتیجه به صورت JSON
-                return Json(new { Price = predictedPrice });
-            }
+                  // Return as JSON
+                  return Json(new { Price = predictedPrice });
+              }
 
-            return BadRequest();
-        }*/
+              return BadRequest();
+          }
     }
 }

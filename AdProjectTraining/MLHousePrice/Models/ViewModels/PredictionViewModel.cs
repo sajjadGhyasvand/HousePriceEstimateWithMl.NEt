@@ -9,6 +9,9 @@ namespace MLHousePrice.Models.ViewModels
         [Range(35, 310, ErrorMessage = "مساحت باید بین 35 و 310 متر مربع باشد.")]
         [DisplayName("مساحت")]
         public int Area { get; set; }
+        [Required(ErrorMessage = " مساحت الزامیست.")]
+        [DisplayName("قیمت کل")]
+        public int TotalPrice { get; set; }
 
         [Required(ErrorMessage = " سال ساخت الزامیست.")]
         [Range(1370, 1410, ErrorMessage = "سال ساخت باید بین 1370 و 1410 باشد.")]
